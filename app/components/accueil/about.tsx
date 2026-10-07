@@ -23,7 +23,6 @@ const TECHNOLOGIES = [
   { name: "Python", icon: Terminal },
   { name: "Laravel", icon: Server },
   { name: "Next.js", icon: Code2 },
-  { name: "TypeScript", icon: FileCode2 },
   { name: "JavaScript", icon: FileCode },
   { name: "Tailwind CSS", icon: Palette },
   { name: "HTML5", icon: Layout },
