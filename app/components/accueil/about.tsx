@@ -96,7 +96,7 @@ export default function AboutSection() {
           >
             {/* Tag de section */}
             <div className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-sky-400" />
+              {/* <span className="h-2 w-2 rounded-full bg-sky-400" /> */}
               <span className="text-xs font-bold uppercase tracking-widest text-sky-400">
                 À Propos — Développeur Full-Stack
               </span>
