@@ -60,17 +60,17 @@ const PROJECTS: Project[] = [
     demoUrl: "https://example.com/edugest",
     githubUrl: "https://github.com/example/edugest",
   },
-  {
-    id: "ia-minute",
-    title: "IA Minute",
-    description: "Générateur d'actifs marketing et de visuels automatisés pour les réseaux sociaux utilisant des modèles d'IA générative.",
-    category: "SaaS",
-    status: "Beta",
-    image: "/projects/iaminute.jpg",
-    technologies: ["Next.js", "Python", "Tailwind CSS", "Framer Motion"],
-    demoUrl: "https://example.com/iaminute",
-    githubUrl: "https://github.com/example/iaminute",
-  },
+//   {
+//     id: "ia-minute",
+//     title: "IA Minute",
+//     description: "Générateur d'actifs marketing et de visuels automatisés pour les réseaux sociaux utilisant des modèles d'IA générative.",
+//     category: "SaaS",
+//     status: "Beta",
+//     image: "/projects/iaminute.jpg",
+//     technologies: ["Next.js", "Python", "Tailwind CSS", "Framer Motion"],
+//     demoUrl: "https://example.com/iaminute",
+//     githubUrl: "https://github.com/example/iaminute",
+//   },
 ];
 
 const CATEGORIES: ProjectCategory[] = ["Tous", "Full-Stack", "Web App", "SaaS"];
