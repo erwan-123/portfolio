@@ -20,7 +20,7 @@ export default function Navbar() {
           </div>
 
           <span className="text-xl font-bold">
-            Erwan Steve
+            Ngansop Erwan 
           </span>
         </a>
 
