@@ -14,21 +14,32 @@ export default function WhatsAppButton() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Contactez-nous sur WhatsApp"
-        initial={{ scale: 0.9, opacity: 0 }}
+        initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         className="group relative flex items-center gap-3 rounded-full bg-[#25D366] px-4 py-3 text-white shadow-lg shadow-[#25D366]/30 transition-all duration-300 hover:bg-[#20ba5a] hover:shadow-xl hover:shadow-[#25D366]/40 sm:px-5"
       >
-        {/* Halo d'animation en arrière-plan (effet de pulsation subtil) */}
-        <span className="absolute -inset-0.5 -z-10 rounded-full bg-[#25D366] opacity-75 blur-md animate-ping" />
+        {/* Pulsation douce et continue en arrière-plan */}
+        <motion.span
+          className="absolute inset-0 -z-10 rounded-full bg-[#25D366]"
+          animate={{
+            scale: [1, 1.3, 1.4],
+            opacity: [0.6, 0.2, 0],
+          }}
+          transition={{
+            duration: 2.5,
+            repeat: Infinity,
+            ease: "easeOut",
+          }}
+        />
 
-        {/* Icône WhatsApp */}
-        <FaWhatsapp className="h-6 w-6 shrink-0 transition-transform duration-300 group-hover:rotate-12" />
+        {/* Icône WhatsApp avec une légère secousse au survol */}
+        <FaWhatsapp className="h-6 w-6 shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6" />
 
         {/* Texte du bouton */}
         <span className="text-xs font-semibold tracking-wide sm:text-sm">
-          Contactez-nous pour plus d’informations
+          Contactez-nous
         </span>
       </motion.a>
     </div>
