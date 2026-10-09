@@ -22,19 +22,19 @@ type Tech = {
 };
 
 const TECHNOLOGIES: Tech[] = [
-  { name: "HTML5",       icon: SiHtml5,        color: "#E34F26", level: "Avancé" },
-  { name: "CSS3",        icon: FaCss3Alt,         color: "#1572B6", level: "Avancé" },
-  { name: "Tailwind CSS",icon: SiTailwindcss,  color: "#06B6D4", level: "Avancé" },
-  { name: "Next.js",     icon: SiNextdotjs,    color: "#000000", level: "Avancé" },
-  { name: "PHP",         icon: SiPhp,          color: "#777BB4", level: "Intermédiaire" },
-  { name: "Laravel",     icon: SiLaravel,      color: "#FF2D20", level: "Intermédiaire" },
-  { name: "MySQL",       icon: SiMysql,        color: "#4479A1", level: "Intermédiaire" },
-  { name: "Python",      icon: SiPython,       color: "#3776AB", level: "Intermédiaire" },
+  { name: "HTML5",       icon: SiHtml5,        color: "#E34F26", level: "" },
+  { name: "CSS3",        icon: FaCss3Alt,         color: "#1572B6", level: "" },
+  { name: "Tailwind CSS",icon: SiTailwindcss,  color: "#06B6D4", level: "" },
+  { name: "Next.js",     icon: SiNextdotjs,    color: "#000000", level: "" },
+  { name: "PHP",         icon: SiPhp,          color: "#777BB4", level: "" },
+  { name: "Laravel",     icon: SiLaravel,      color: "#FF2D20", level: "" },
+  { name: "MySQL",       icon: SiMysql,        color: "#4479A1", level: "" },
+  { name: "Python",      icon: SiPython,       color: "#3776AB", level: "" },
 ];
 
 export default function TechStack() {
   return (
-    <section className="py-20 px-4 bg-gray-50">
+    <section className="py-20 px-4 bg-[#070d18] ">
       <div className="max-w-6xl mx-auto">
         {/* En-tête de section */}
         <div className="text-center mb-12">
