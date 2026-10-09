@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import WhatsAppButton from "./components/bouton"; // Ajustez le chemin selon votre projet
@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   description: "Développeur Full-Stack Next.js & Laravel",
 };
 
+export const viewport: Viewport={
+  themeColor:"#070d18",
+}
 export default function RootLayout({
   children,
 }: {
