@@ -1,11 +1,31 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-
 export async function POST(request: Request) {
-    const resend = new Resend(process.env.RESEND_API_KEY);
-
   try {
+    // Vérification des variables d'environnement
+    const apiKey = process.env.RESEND_API_KEY;
+    const contactEmail = process.env.CONTACT_EMAIL;
+
+    if (!apiKey) {
+      console.error("❌ RESEND_API_KEY manquante dans .env.local");
+      return NextResponse.json(
+        { error: "Configuration serveur invalide (clé API manquante)." },
+        { status: 500 }
+      );
+    }
+
+    if (!contactEmail) {
+      console.error("❌ CONTACT_EMAIL manquant dans .env.local");
+      return NextResponse.json(
+        { error: "Configuration serveur invalide (email destinataire manquant)." },
+        { status: 500 }
+      );
+    }
+
+    // Initialisation de Resend APRÈS avoir vérifié la clé
+    const resend = new Resend(apiKey);
+
     const { name, email, subject, message } = await request.json();
 
     // Validation
@@ -25,9 +45,12 @@ export async function POST(request: Request) {
       );
     }
 
+    console.log("📧 Tentative d'envoi à:", contactEmail);
+    console.log("📧 Depuis:", email, "| Nom:", name);
+
     const { data, error } = await resend.emails.send({
-      from: "Portfolio Contact <onboarding@resend.dev>", // À remplacer par ton domaine vérifié
-      to: [process.env.CONTACT_EMAIL!],
+      from: "Portfolio Contact <onboarding@resend.dev>",
+      to: [contactEmail],
       replyTo: email,
       subject: subject || `Nouveau message de ${name}`,
       html: `
@@ -45,22 +68,23 @@ export async function POST(request: Request) {
     });
 
     if (error) {
-      console.error("Erreur Resend:", error);
+      console.error("❌ Erreur Resend détaillée:", JSON.stringify(error, null, 2));
       return NextResponse.json(
-        { error: "Erreur lors de l'envoi du message." },
+        { error: error.message || "Erreur lors de l'envoi du message." },
         { status: 500 }
       );
     }
+
+    console.log("✅ Email envoyé avec succès, ID:", data?.id);
 
     return NextResponse.json(
       { message: "Message envoyé avec succès !", id: data?.id },
       { status: 200 }
     );
   } catch (error) {
-    console.error("Erreur serveur:", error);
-    return NextResponse.json(
-      { error: "Une erreur interne est survenue." },
-      { status: 500 }
-    );
+    console.error("❌ Erreur serveur complète:", error);
+    const message =
+      error instanceof Error ? error.message : "Une erreur interne est survenue.";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
