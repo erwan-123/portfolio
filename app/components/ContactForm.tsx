@@ -149,7 +149,7 @@ export default function ContactForm() {
                 required
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-3.5 py-2.5 text-sm bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 outline-none transition"
+                className="w-full px-3.5 py-2.5 text-sm text-black bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 outline-none transition"
                 placeholder="Jean Dupont"
               />
             </div>
@@ -187,7 +187,7 @@ export default function ContactForm() {
               name="subject"
               value={formData.subject}
               onChange={handleChange}
-              className="w-full px-3.5 py-2.5 text-sm bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 outline-none transition"
+              className="w-full px-3.5 py-2.5 text-black text-sm bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 outline-none transition"
               placeholder="Proposition de collaboration"
             />
           </div>
@@ -206,7 +206,7 @@ export default function ContactForm() {
               rows={5}
               value={formData.message}
               onChange={handleChange}
-              className="w-full px-3.5 py-2.5 text-sm bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 outline-none resize-none transition"
+              className="w-full px-3.5 py-2.5 text-black text-sm bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 outline-none resize-none transition"
               placeholder="Écris ton message ici..."
             />
           </div>
