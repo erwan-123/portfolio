@@ -9,11 +9,11 @@ const CONTACT_INFO = {
   email: "stevengansop258@gmail.com",
   github: {
     username: "erwan-123",
-    url: "https://github.com/ton-username",
+    url: "https://github.com/erwan-123",
   },
   linkedin: {
     username: "steve Ngansop",
-    url: "https://linkedin.com/in/ton-profil",
+    url: "https://linkedin.com/in/steve ngansop",
   },
 };
 
@@ -150,7 +150,7 @@ export default function ContactForm() {
                 value={formData.name}
                 onChange={handleChange}
                 className="w-full px-3.5 py-2.5 text-sm text-black bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 outline-none transition"
-                placeholder="Jean Dupont"
+                placeholder="entrez votre nom"
               />
             </div>
 
