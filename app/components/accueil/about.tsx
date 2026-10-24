@@ -1,7 +1,8 @@
 "use client";
 
-import Image from "next/image";
+import AnimatedImage from "../AnimatedImage";
 import { motion } from "framer-motion";
+import { useIsReady } from "../PreloaderProvider";
 import { 
   Database,     // PHP
   Terminal,     // Python
@@ -31,6 +32,7 @@ const TECHNOLOGIES = [
 ];
 
 export default function AboutSection() {
+  const isReady = useIsReady();
   const marqueeItems = [...TECHNOLOGIES, ...TECHNOLOGIES];
 
   return (
@@ -47,10 +49,13 @@ export default function AboutSection() {
           
           {/* 1. PHOTO DE PROFIL GRANDE ET SUR LE CÔTÉ (5 colonnes sur desktop) */}
           <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+            initial={{ opacity: 0, x: -60, scale: 0.97 }}
+            animate={{
+              opacity: isReady ? 1 : 0,
+              x: isReady ? 0 : -60,
+              scale: isReady ? 1 : 0.97,
+            }}
+            transition={{ duration: 0.9, ease: [0.215, 0.61, 0.355, 1] }}
             className="relative lg:col-span-5"
           >
             <div className="group relative mx-auto max-w-md lg:max-w-none">
@@ -63,13 +68,16 @@ export default function AboutSection() {
                 
                 {/* Conteneur Image Grande (Ratio vertical / Portrait) */}
                 <div className="relative h-[480px] w-full overflow-hidden rounded-2xl sm:h-[560px]">
-                  <Image
+                  <AnimatedImage
                     src="/profil.jpg"
                     alt="Photo de profil"
                     fill
                     priority
                     sizes="(max-width: 1024px) 100vw, 450px"
-                    className="object-cover object-center grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
+                    blur
+                    reveal={false}
+                    className="absolute inset-0"
+                    imageClassName="object-cover object-center grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
                   />
                   
                   {/* Overlay avec dégradé bleu marine subtil */}
@@ -88,10 +96,12 @@ export default function AboutSection() {
 
           {/* 2. TEXTE DE PRÉSENTATION (7 colonnes sur desktop) */}
           <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+            initial={{ opacity: 0, x: 60 }}
+            animate={{
+              opacity: isReady ? 1 : 0,
+              x: isReady ? 0 : 60,
+            }}
+            transition={{ duration: 0.9, delay: 0.15, ease: [0.215, 0.61, 0.355, 1] }}
             className="flex flex-col justify-center space-y-6 lg:col-span-7"
           >
             {/* Tag de section */}
@@ -123,20 +133,40 @@ export default function AboutSection() {
             </div>
 
             {/* Chiffres / Cartes de compétences rapides */}
-            <div className="grid grid-cols-2 gap-4 pt-4 sm:grid-cols-3">
-              <div className="rounded-2xl border border-sky-500/15 bg-[#0b1426]/60 p-4 backdrop-blur-md">
-                <div className="text-2xl font-bold text-sky-400">Architecture</div>
-                <div className="text-xs font-medium text-slate-400">Robustesse & Scalabilité</div>
-              </div>
-              <div className="rounded-2xl border border-sky-500/15 bg-[#0b1426]/60 p-4 backdrop-blur-md">
-                <div className="text-2xl font-bold text-sky-400">Performance</div>
-                <div className="text-xs font-medium text-slate-400">Next.js & Code Propre</div>
-              </div>
-              <div className="col-span-2 rounded-2xl border border-sky-500/15 bg-[#0b1426]/60 p-4 backdrop-blur-md sm:col-span-1">
-                <div className="text-2xl font-bold text-sky-400">UX / UI</div>
-                <div className="text-xs font-medium text-slate-400">Interfaces Soignées</div>
-              </div>
-            </div>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              variants={{
+                hidden: {},
+                visible: { transition: { staggerChildren: 0.12, delayChildren: 0.25 } },
+              }}
+              className="grid grid-cols-2 gap-4 pt-4 sm:grid-cols-3"
+            >
+              {[
+                { title: "Architecture", subtitle: "Robustesse & Scalabilité" },
+                { title: "Performance", subtitle: "Next.js & Code Propre" },
+                { title: "UX / UI", subtitle: "Interfaces Soignées", wide: true },
+              ].map((card) => (
+                <motion.div
+                  key={card.title}
+                  variants={{
+                    hidden: { opacity: 0, y: 24 },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      transition: { duration: 0.5, ease: [0.215, 0.61, 0.355, 1] },
+                    },
+                  }}
+                  className={`rounded-2xl border border-sky-500/15 bg-[#0b1426]/60 p-4 backdrop-blur-md ${
+                    card.wide ? "col-span-2 sm:col-span-1" : ""
+                  }`}
+                >
+                  <div className="text-2xl font-bold text-sky-400">{card.title}</div>
+                  <div className="text-xs font-medium text-slate-400">{card.subtitle}</div>
+                </motion.div>
+              ))}
+            </motion.div>
 
           </motion.div>
 

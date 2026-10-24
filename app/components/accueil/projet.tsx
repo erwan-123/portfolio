@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
+import AnimatedImage from "../AnimatedImage";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { 
   ExternalLink, 
@@ -11,14 +10,10 @@ import {
 } from "lucide-react";
 
 // Types TypeScript
-export type ProjectCategory = "Tous" | "Full-Stack" | "Web App" | "SaaS";
-
 export interface Project {
   id: string;
   title: string;
   description: string;
-  category: ProjectCategory;
-  status: "En production" | "En développement" | "Beta";
   image: string;
   technologies: string[];
   demoUrl?: string;
@@ -31,8 +26,6 @@ const PROJECTS: Project[] = [
     id: "stocking",
     title: "Stocking",
     description: "Application intuitive de gestion de stock en temps réel. Suivi des inventaires, gestion des fournisseurs et analyse statistique des flux.",
-    category: "Full-Stack",
-    status: "En production",
     image: "/projects/stocking.jpg",
     technologies: ["PHP", "Laravel", "Next.js", "Tailwind CSS", "MySQL"],
     demoUrl: "https://example.com/stocking",
@@ -42,8 +35,6 @@ const PROJECTS: Project[] = [
     id: "memoria",
     title: "Memoria",
     description: "Plateforme d'assistance à la rédaction et structuration de mémoires académiques. Intègre le suivi des révisions et l'organisation bibliographique.",
-    category: "SaaS",
-    status: "En production",
     image: "/projects/memoria.jpg",
     technologies: ["Next.js", "TypeScript", "Python", "Tailwind CSS", "PostgreSQL"],
     demoUrl: "https://example.com/memoria",
@@ -53,8 +44,6 @@ const PROJECTS: Project[] = [
     id: "edugest",
     title: "EduGest",
     description: "Système complet de gestion d'établissement scolaire : notes, absences, plannings, facturation et portail parents/enseignants.",
-    category: "Web App",
-    status: "En production",
     image: "/projects/edugest.jpg",
     technologies: ["PHP", "Laravel", "JavaScript", "Tailwind CSS"],
     demoUrl: "https://example.com/edugest",
@@ -72,8 +61,6 @@ const PROJECTS: Project[] = [
 //     githubUrl: "https://github.com/example/iaminute",
 //   },
 ];
-
-const CATEGORIES: ProjectCategory[] = ["Tous", "Full-Stack", "Web App", "SaaS"];
 
 // 🎬 VARIANTS FRAMER MOTION POUR L'EFFET EN CASCADE (STAGGER)
 const containerVariants: Variants = {
@@ -105,12 +92,6 @@ const cardVariants: Variants = {
 };
 
 export default function ProjectsSection() {
-  const [activeCategory, setActiveCategory] = useState<ProjectCategory>("Tous");
-
-  const filteredProjects = activeCategory === "Tous" 
-    ? PROJECTS 
-    : PROJECTS.filter((project) => project.category === activeCategory);
-
   return (
     <section className="relative w-full overflow-hidden bg-[#070d18] py-24 text-slate-100">
       {/* Arrière-plan grille & gradients bleu marine */}
@@ -156,39 +137,8 @@ export default function ProjectsSection() {
           </motion.p>
         </div>
 
-        {/* FILTRES PAR CATÉGORIE */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-10 flex flex-wrap items-center justify-center gap-2 sm:gap-3"
-        >
-          {CATEGORIES.map((category) => (
-            <button
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              className={`relative rounded-full px-5 py-2 text-xs font-semibold tracking-wide transition-all duration-300 ${
-                activeCategory === category
-                  ? "text-slate-100 shadow-lg shadow-sky-500/20"
-                  : "border border-sky-500/10 bg-[#0b1426]/60 text-slate-400 hover:border-sky-500/30 hover:text-slate-200"
-              }`}
-            >
-              {activeCategory === category && (
-                <motion.div
-                  layoutId="activeFilter"
-                  className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600 to-sky-500"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                />
-              )}
-              <span className="relative z-10">{category}</span>
-            </button>
-          ))}
-        </motion.div>
-
         {/* 🚀 GRILLE DE CARTES AVEC ANIMATION D'APPARITION AU SCROLL (STAGGER) */}
         <motion.div 
-          key={activeCategory} // Force le re-déclenchement propre de l'animation lors du changement de filtre
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -196,7 +146,7 @@ export default function ProjectsSection() {
           className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
         >
           <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project) => (
+            {PROJECTS.map((project) => (
               <motion.article
                 layout
                 key={project.id}
@@ -209,27 +159,19 @@ export default function ProjectsSection() {
 
                 {/* IMAGE DU PROJET */}
                 <div className="relative h-56 w-full overflow-hidden bg-slate-900">
-                  <Image
+                  <AnimatedImage
                     src={project.image}
                     alt={`Aperçu du projet ${project.title}`}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                    blur
+                    reveal={false}
+                    className="absolute inset-0"
+                    imageClassName="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
                   />
                   
                   {/* Overlay dégradé */}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0b1426] via-transparent to-black/30" />
-
-                  {/* Badge de statut */}
-                  <div className="absolute top-4 left-4 flex items-center gap-1.5 rounded-full border border-white/10 bg-[#070d18]/80 px-3 py-1 backdrop-blur-md">
-                    <span className={`h-2 w-2 rounded-full ${project.status === "En production" ? "bg-emerald-400" : "bg-sky-400"}`} />
-                    <span className="text-[11px] font-medium text-slate-200">{project.status}</span>
-                  </div>
-
-                  {/* Tag Catégorie */}
-                  <div className="absolute top-4 right-4 rounded-full border border-sky-400/20 bg-sky-950/80 px-3 py-1 text-[11px] font-semibold text-sky-400 backdrop-blur-md">
-                    {project.category}
-                  </div>
                 </div>
 
                 {/* CONTENU DE LA CARTE */}

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import WhatsAppButton from "./components/bouton"; // Ajustez le chemin selon votre projet
+import PreloaderProvider from "./components/PreloaderProvider";
 import { Analytics } from "@vercel/analytics/react";
 
 const geistSans = Geist({
@@ -33,12 +34,14 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#050a14] text-slate-100">
-        {/* Rendu dynamique des pages */}
-        {children}
+        <PreloaderProvider>
+          {/* Rendu dynamique des pages */}
+          {children}
 
-        {/* Bouton WhatsApp global accessible sur toutes les pages */}
-        <WhatsAppButton />
-        <Analytics/>
+          {/* Bouton WhatsApp global accessible sur toutes les pages */}
+          <WhatsAppButton />
+          <Analytics />
+        </PreloaderProvider>
       </body>
     </html>
   );
